@@ -3,14 +3,16 @@ import { Switch, Route } from 'react-router-dom';
 import './App.css';
 import HomePage from './pages/home-page/home-page.component';
 
-const HatsPage = () => (
-  <div>
-    <h1> HATS-PAGE </h1>
-  </div>
-);
+const HatsPage = (props) => {
+  console.log('HATS-PROPS :: ', props);
+  return (
+    <div className="hats-page">
+      <h1> HATS-PAGE </h1>
+    </div>
+  );
+}
 
 export class App extends Component {
-
   render() {
     return (
       <div>
@@ -21,7 +23,6 @@ export class App extends Component {
       </div>
     );
   }
-
 }
 
 export default App;
