@@ -1,0 +1,17 @@
+body {
+    font-family: "Open Sans Condensed";
+    padding: 20px 60px;
+}
+
+.hats-page {
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+
+    .heading {
+        display: flex;
+        flex-flow: row;
+        justify-content: center;
+        margin-bottom: unset;
+    }
+}
