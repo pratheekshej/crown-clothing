@@ -1,7 +1,11 @@
 .sign-in {
-    width: 30vw;
+    width: 380px; // 30vw;
     display: flex;
     flex-flow: column;
+
+    h2 {
+        margin: 10px 0;
+    }
 
     .title {
         margin: 10px 0;

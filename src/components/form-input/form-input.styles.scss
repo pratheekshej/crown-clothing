@@ -51,4 +51,15 @@ $main-color: black;
             @include shrinkLabel();
         }
     }
+
+    &.error {
+        .form-input {
+            margin: 25px 0 0 0;
+        }
+
+        .error-bubble {
+            font-size: 13px;
+            color: indianred;
+        }
+    }
 }
