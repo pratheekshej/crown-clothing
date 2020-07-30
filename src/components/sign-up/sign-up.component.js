@@ -12,7 +12,13 @@ class SignUp extends React.Component {
             email: '',
             password: '',
             confirmPassword: '',
-            error: {}
+            error: {},
+            isBlurred: {
+                confirmPassword: false
+            },
+            isDirty: {
+                confirmPassword: false
+            }
         };
     }
 
@@ -32,7 +38,13 @@ class SignUp extends React.Component {
                 email: '',
                 password: '',
                 confirmPassword: '',
-                error: {}
+                error: {},
+                isBlurred: {
+                    confirmPassword: false
+                },
+                isDirty: {
+                    confirmPassword: false
+                }
             });
         } catch (error) {
             console.error('ERROR => ', error);
@@ -42,12 +54,19 @@ class SignUp extends React.Component {
     handleChange = event => {
         const { name, value } = event.target;
         this.setState({ [name]: value }, () => {
-            const { password, confirmPassword, error } = this.state;
+            const { password, confirmPassword, error, isBlurred, isDirty } = this.state;
             if (name === 'confirmPassword') {
-                if (confirmPassword !== '' && password === confirmPassword) {
-                    error['pwdMismatch'] = null;
-                    this.setState({ error: error });
-                    return;
+                if (confirmPassword !== '') {
+                    this.setState({ isDirty: { confirmPassword: true } });
+                    if (password === confirmPassword) {
+                        error['pwdMismatch'] = null;
+                        this.setState({ error: error });
+                        return;
+                    } else if (isBlurred.confirmPassword && isDirty.confirmPassword) {
+                        if (password !== confirmPassword) {
+                            this.passwordMismatchError.apply(error);
+                        }
+                    }
                 }
             }
         });
@@ -58,11 +77,16 @@ class SignUp extends React.Component {
         const { password, confirmPassword, error } = this.state;
         if (name === 'confirmPassword') {
             if (confirmPassword !== '' && password !== confirmPassword) {
-                error['pwdMismatch'] = 'Passwords do not match!';
-                this.setState({ error: error });
-                return;
+                this.setState({ isBlurred: { confirmPassword: true } });
+                this.passwordMismatchError.apply(error);
             }
         }
+    }
+
+    passwordMismatchError = (error) => {
+        error['pwdMismatch'] = 'Passwords do not match!';
+        this.setState({ error: error });
+        return;
     }
 
     render() {
