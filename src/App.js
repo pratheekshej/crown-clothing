@@ -37,13 +37,19 @@ export class App extends Component {
       <div>
         <Header />
         <Switch>
-          <Route exact path='/' component={HomePage}></Route>
-          <Route path='/shop' component={ShopPage}></Route>
+          <Route exact path='/' component={HomePage} />
+          <Route path='/shop' component={ShopPage} />
           <Route
             exact
             path='/sign-in'
-            render={() => this.props.currentUser ? (<Redirect to="/" />) : (<SignInAndSignUp />)}>
-          </Route>
+            render={() =>
+              this.props.currentUser ? (
+                <Redirect to='/' />
+              ) : (
+                  <SignInAndSignUp />
+              )
+            }
+          />
         </Switch>
       </div>
     );
