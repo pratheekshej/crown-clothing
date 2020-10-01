@@ -3,16 +3,16 @@ export const addItemToCart = (cartItems, cartItemToAdd) => {
     if (existingCartItems) {
         const filteredCartItems = cartItems.map(cartItem => (
             (cartItem.id === cartItemToAdd.id) ?
-            { ...cartItem, quantity: cartItem.quantity + 1 } :
-            cartItem
+                { ...cartItem, quantity: cartItem.quantity + 1 } :
+                cartItem
         ));
         return filteredCartItems;
     }
     return [...cartItems, { ...cartItemToAdd, quantity: 1 }];
 };
 
-export const showCartToggle = (cartItems, val) => {
-    if (cartItems && cartItems.length === 0) {
+export const showCartToggle = (itemCount, val) => {
+    if (itemCount === null || typeof itemCount === 'undefined' || itemCount === 0) {
         return true;
     } else {
         return val;
