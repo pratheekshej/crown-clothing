@@ -13,12 +13,8 @@ class SignUp extends React.Component {
             password: '',
             confirmPassword: '',
             error: {},
-            isBlurred: {
-                confirmPassword: false
-            },
-            isDirty: {
-                confirmPassword: false
-            }
+            isBlurred: { confirmPassword: false },
+            isDirty: { confirmPassword: false }
         };
     }
 
@@ -39,12 +35,8 @@ class SignUp extends React.Component {
                 password: '',
                 confirmPassword: '',
                 error: {},
-                isBlurred: {
-                    confirmPassword: false
-                },
-                isDirty: {
-                    confirmPassword: false
-                }
+                isBlurred: { confirmPassword: false },
+                isDirty: { confirmPassword: false }
             });
         } catch (error) {
             console.error('ERROR => ', error);
