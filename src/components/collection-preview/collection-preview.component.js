@@ -2,10 +2,10 @@ import React from "react";
 import './collection-preview.styles.scss';
 import CollectionItem from "../collection-item/collection-item.component";
 
-const CollectionPreview = ({ title, items }) => {
+const CollectionPreview = ({ title, items, routeName, history }) => {
     return (
         <div className="collection-preview">
-            <div className="title">
+            <div className="title" onClick={() => history.push(`shop/${routeName}`)}>
                 {title.toUpperCase()}
             </div>
             <div className="preview">

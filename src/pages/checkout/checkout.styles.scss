@@ -27,5 +27,18 @@
         margin-top: 30px;
         margin-left: auto;
         font-size: 36px;
+        display: flex;
+        flex-flow: column;
+        align-items: flex-end;
+
+        & > div:nth-of-type(2) {
+            margin-top: -10px;
+        }
+    }
+
+    .test-warning {
+        text-align: center;
+        font-size: 24px;
+        color: red;
     }
 }
