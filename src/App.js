@@ -11,6 +11,8 @@ import { setCurrentUser } from './redux/user/user.actions';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from './redux/user/user.selectors';
 import CheckoutPage from './pages/checkout/checkout.component';
+import { FixedHeader } from './components/containers/header/fixed-header.styles';
+import { ScrollableSection } from './components/containers/body/scrollable-body.styles';
 
 export class App extends Component {
   // DEC : VARS
@@ -38,23 +40,27 @@ export class App extends Component {
   render() {
     return (
       <div>
-        <Header />
-        <Switch>
-          <Route exact path='/' component={HomePage} />
-          <Route path='/shop' component={ShopPage} />
-          <Route exact path='/checkout' component={CheckoutPage} />
-          <Route
-            exact
-            path='/sign-in'
-            render={() =>
-              this.props.currentUser ? (
-                <Redirect to='/' />
-              ) : (
-                  <SignInAndSignUp />
-              )
-            }
-          />
-        </Switch>
+        <FixedHeader>
+          <Header />
+        </FixedHeader>
+        <ScrollableSection>
+          <Switch>
+            <Route exact path='/' component={HomePage} />
+            <Route path='/shop' component={ShopPage} />
+            <Route exact path='/checkout' component={CheckoutPage} />
+            <Route
+              exact
+              path='/sign-in'
+              render={() =>
+                this.props.currentUser ? (
+                  <Redirect to='/' />
+                ) : (
+                    <SignInAndSignUp />
+                  )
+              }
+            />
+          </Switch>
+        </ScrollableSection>
       </div>
     );
   }
