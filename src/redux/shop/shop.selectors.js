@@ -17,11 +17,11 @@ export const selectShopCollections = createSelector(
 
 export const selectCollections = createSelector(
     [selectShopCollections],
-    (collections) => Object.keys(collections).map(key => collections[key])
+    (collections) => collections ? Object.keys(collections).map(key => collections[key]) : []
 );
 
 // collections.find(collection => collection.id === COLLECTION_ID_MAP[collectionUrlParam])
 export const selectCollection = (collectionUrlParam) => createSelector(
     [selectShopCollections],
-    (collections) => collections[collectionUrlParam]
+    (collections) => collections ? collections[collectionUrlParam] : null
 );
