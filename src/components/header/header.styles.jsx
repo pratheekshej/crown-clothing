@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 const OptionContainerStyles = css`
     padding: 10px 15px;
     &:hover {
-        cursor: cursor;
+        cursor: pointer;
         font-weight: bold;
     }
 `;

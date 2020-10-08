@@ -1,7 +1,8 @@
 import { userActionTypes } from "./user.types";
 
 const INITIAL_STATE = {
-    currentUser: null
+    currentUser: null,
+    isSigningInOrOut: false
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -10,8 +11,12 @@ const userReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 currentUser: action.payload
-            }
-
+            };
+        case userActionTypes.SET_SIGNING_IN_OUT:
+            return {
+                ...state,
+                isSigningInOrOut: !state.isSigningInOrOut
+            };
         default:
             return state;
     }

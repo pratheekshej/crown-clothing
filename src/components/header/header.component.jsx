@@ -8,40 +8,52 @@ import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 import { selectCartHidden } from '../../redux/cart/cart.selectors';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 import { HeaderContainer, LogoContainer, OptionDiv, OptionLink, OptionsContainer, Title } from './header.styles';
+import { signingInOrOut } from '../../redux/user/user.actions';
 
-const Header = ({ currentUser, hidden }) => (
-    <HeaderContainer>
-        <LogoContainer to="/">
-            <Logo className="logo" />
-            <Title>CROWN CLOTHING</Title>
-        </LogoContainer>
-        <OptionsContainer>
-            <OptionLink to="/shop"> SHOP </OptionLink>
-            {/* <OptionLink to="/contact"> CONTACT </OptionLink> */}
+const Header = ({ currentUser, hidden, signing }) => {
+    return (
+        <HeaderContainer>
+            <LogoContainer to="/">
+                <Logo className="logo" />
+                <Title>CROWN CLOTHING</Title>
+            </LogoContainer>
+            <OptionsContainer>
+                <OptionLink to="/shop"> SHOP </OptionLink>
+                {/* <OptionLink to="/contact"> CONTACT </OptionLink> */}
+                {
+                    currentUser ?
+                        (
+                            <OptionDiv onClick={() => {
+                                signing();
+                                auth.signOut().then(res => {
+                                    return setTimeout(() => { signing() }, 500);
+                                })
+                            }}>
+                                SIGN OUT
+                            </OptionDiv>
+                        ) :
+                        (
+                            <OptionLink to="/sign-in">
+                                SIGN IN
+                            </OptionLink>
+                        )
+                }
+                <CartIcon />
+            </OptionsContainer>
             {
-                currentUser ?
-                    (
-                        <OptionDiv onClick={() => auth.signOut()}>
-                            SIGN OUT
-                        </OptionDiv>
-                    ) :
-                    (
-                        <OptionLink to="/sign-in">
-                            SIGN IN
-                        </OptionLink>
-                    )
+                hidden ? null : (<CartDropdown />)
             }
-            <CartIcon />
-        </OptionsContainer>
-        {
-            hidden ? null : (<CartDropdown />)
-        }
-    </HeaderContainer>
-);
+        </HeaderContainer>
+    );
+};
 
 const mapStateToProps = createStructuredSelector({
     currentUser: selectCurrentUser,
     hidden: selectCartHidden
 });
 
-export default connect(mapStateToProps)(Header);
+const mapDispatchToProps = (dispatch) => ({
+    signing: () => dispatch(signingInOrOut())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

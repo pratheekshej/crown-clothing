@@ -3,6 +3,8 @@ import './sign-in.styles.scss';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 import { signInWithGoogle, auth } from '../../firebase/firebase.utils';
+import { signingInOrOut } from '../../redux/user/user.actions';
+import { connect } from 'react-redux';
 
 class SignIn extends React.Component {
     constructor(props) {
@@ -15,13 +17,17 @@ class SignIn extends React.Component {
 
     handleSubmit = async event => {
         event.preventDefault();
+        const { signingIn } = this.props;
         const { email, password } = this.state;
+        signingIn();
         if (email && password) {
             try {
                 await auth.signInWithEmailAndPassword(email, password);
                 this.setState({ email: '', password: '' });
+                signingIn();
             } catch (error) {
                 console.error(`Login Error ::> ${error}`);
+                signingIn();
             }
         }
     }
@@ -65,4 +71,8 @@ class SignIn extends React.Component {
     }
 }
 
-export default SignIn;
+const mapDispatchToProps = (dispatch) => ({
+    signingIn: () => dispatch(signingInOrOut())
+});
+
+export default connect(null, mapDispatchToProps)(SignIn);
