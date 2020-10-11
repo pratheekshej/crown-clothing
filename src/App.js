@@ -7,7 +7,7 @@ import Header from './components/header/header.component';
 import SignInAndSignUp from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 // import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 import { connect } from 'react-redux';
-import { signingInOrOut } from './redux/user/user.actions'; // setCurrentUser
+import { checkUserSession } from './redux/user/user.actions'; // setCurrentUser, signingInOrOut
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser, isSigningInOrOut } from './redux/user/user.selectors';
 import CheckoutPage from './pages/checkout/checkout.component';
@@ -25,6 +25,8 @@ export class App extends Component {
 
   componentDidMount() {
     // const { setCurrentUser, signing } = this.props; // collectionsArray
+    const { checkUserSession } = this.props;
+    checkUserSession();
   }
 
   componentWillUnmount() { // this.unsubscribeFromAuth();
@@ -85,7 +87,8 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
   // setCurrentUser: user => dispatch(setCurrentUser(user)),
-  signing: () => dispatch(signingInOrOut())
+  // signing: () => dispatch(signingInOrOut()),
+  checkUserSession: () => dispatch(checkUserSession())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

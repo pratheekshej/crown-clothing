@@ -2,7 +2,9 @@ import React from 'react';
 import './sign-up.styles.scss';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
-import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
+// import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
+import { connect } from 'react-redux';
+import { signUpStart } from '../../redux/user/user.actions';
 
 class SignUp extends React.Component {
     constructor() {
@@ -18,29 +20,21 @@ class SignUp extends React.Component {
         };
     }
 
+    componentDidMount() {
+        this.clearFormFields();
+    }
+
     handleSubmit = async event => {
         event.preventDefault();
         const { displayName, email, password, confirmPassword, error } = this.state;
+        const { signUp } = this.props;
         if (password !== confirmPassword) {
             error['pwdMismatch'] = 'Passwords do not match!';
             this.setState({ error: error });
             return;
         }
-        try {
-            const { user } = await auth.createUserWithEmailAndPassword(email, password);
-            await createUserProfileDocument(user, { displayName });
-            this.setState({
-                displayName: '',
-                email: '',
-                password: '',
-                confirmPassword: '',
-                error: {},
-                isBlurred: { confirmPassword: false },
-                isDirty: { confirmPassword: false }
-            });
-        } catch (error) {
-            console.error('ERROR => ', error);
-        }
+        signUp({ email, password, displayName });
+        this.clearFormFields();
     }
 
     handleChange = event => {
@@ -80,6 +74,18 @@ class SignUp extends React.Component {
         error['pwdMismatch'] = 'Passwords do not match!';
         this.setState({ error: error });
         return;
+    }
+
+    clearFormFields = () => {
+        this.setState({
+            displayName: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+            error: {},
+            isBlurred: { confirmPassword: false },
+            isDirty: { confirmPassword: false }
+        });
     }
 
     render() {
@@ -126,4 +132,8 @@ class SignUp extends React.Component {
     }
 }
 
-export default SignUp;
+const mapDispatchToProps = (dispatch) => ({
+    signUp: (userCreds) => dispatch(signUpStart(userCreds))
+});
+
+export default connect(null, mapDispatchToProps)(SignUp);

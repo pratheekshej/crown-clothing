@@ -6,6 +6,7 @@ export const SpinnerOverlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 25vh;
 `;
 
 export const SpinnerContainer = styled.div`

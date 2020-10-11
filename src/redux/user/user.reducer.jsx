@@ -21,6 +21,15 @@ const userReducer = (state = INITIAL_STATE, action) => {
                 isSigningInOrOut: false // !state.isSigningInOrOut
             };
         // case userActionTypes.GOOGLE_SIGN_IN_FAILURE:
+        case userActionTypes.SIGN_OUT_SUCCESS:
+            return {
+                ...state,
+                currentUser: null,
+                isSigningInOrOut: false,
+                error: null
+            };
+        case userActionTypes.SIGN_OUT_FAILURE:
+        case userActionTypes.SIGN_UP_FAILURE:
         case userActionTypes.SIGN_IN_FAILURE: // EMAIL_SIGN_IN_FAILURE:
             return {
                 ...state,
@@ -30,7 +39,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
         case userActionTypes.SET_SIGNING_IN_OUT:
             return {
                 ...state,
-                isSigningInOrOut: !state.isSigningInOrOut
+                isSigningInOrOut: true // !state.isSigningInOrOut
             };
         default:
             return state;
