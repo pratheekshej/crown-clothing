@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import './App.scss';
 import HomePage from './pages/home-page/home-page.component';
@@ -19,65 +19,36 @@ import WidthSpinner from './components/width-spinner/width-spinner.component';
 const HomePageWithSpinner = WidthSpinner(HomePage);
 const SignInAndSignUpWithSpinner = WidthSpinner(SignInAndSignUp);
 
-export class App extends Component {
-  // DEC : VARS
-  unsubscribeFromAuth = null;
-
-  componentDidMount() {
-    // const { setCurrentUser, signing } = this.props; // collectionsArray
-    const { checkUserSession } = this.props;
+const App = ({ checkUserSession, currentUser, signingInOrOut, ...otherProps }) => {
+  useEffect(() => {
     checkUserSession();
-  }
+  }, [checkUserSession]);
 
-  componentWillUnmount() { // this.unsubscribeFromAuth();
-  }
-
-  render() {
-    const { signingInOrOut } = this.props;
-    return (
-      <div>
-        <FixedHeader>
-          <Header />
-        </FixedHeader>
-        <ScrollableSection>
-          <Switch>
-            <Route exact path='/' render={() => (<HomePageWithSpinner isLoading={signingInOrOut} {...this.props} />)} /> {/* component={HomePage} */}
-            <Route path='/shop' component={ShopPage} />
-            <Route exact path='/checkout' component={CheckoutPage} />
-            <Route
-              exact
-              path='/sign-in'
-              render={() =>
-                this.props.currentUser ? (
-                  <Redirect to='/' />
-                ) : (
-                    <SignInAndSignUpWithSpinner isLoading={signingInOrOut} {...this.props} />
-                  )
-              }
-            />
-          </Switch>
-        </ScrollableSection>
-      </div>
-    );
-  }
-
-  BACKUP_authStateChangedMethod = () => {
-    /* this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-      if (userAuth) {
-        signing();
-        const userRef = await createUserProfileDocument(userAuth);
-        userRef.onSnapshot(snapShot => {
-          setCurrentUser({
-            id: snapShot.id,
-            ...snapShot.data()
-          });
-          signing();
-        });
-      } else {
-        setCurrentUser(userAuth);
-      } // addCollectionAndDocuments('collections', collectionsArray.map(({ title, items })=> ({title, items})));
-    }); */
-  }
+  return (
+    <div>
+      <FixedHeader>
+        <Header />
+      </FixedHeader>
+      <ScrollableSection>
+        <Switch>
+          <Route exact path='/' render={() => (<HomePageWithSpinner isLoading={signingInOrOut} {...otherProps} />)} /> {/* component={HomePage} */}
+          <Route path='/shop' component={ShopPage} />
+          <Route exact path='/checkout' component={CheckoutPage} />
+          <Route
+            exact
+            path='/sign-in'
+            render={() =>
+              currentUser ? (
+                <Redirect to='/' />
+              ) : (
+                  <SignInAndSignUpWithSpinner isLoading={signingInOrOut} {...otherProps} />
+                )
+            }
+          />
+        </Switch>
+      </ScrollableSection>
+    </div>
+  );
 }
 
 const mapStateToProps = createStructuredSelector({
@@ -86,8 +57,6 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-  // setCurrentUser: user => dispatch(setCurrentUser(user)),
-  // signing: () => dispatch(signingInOrOut()),
   checkUserSession: () => dispatch(checkUserSession())
 });
 
