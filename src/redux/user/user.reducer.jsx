@@ -41,8 +41,13 @@ const userReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 isSigningInOrOut: true // !state.isSigningInOrOut
             };
+        case userActionTypes.SET_SIGNING_IN_OUT_OFF:
+            return {
+                ...state,
+                isSigningInOrOut: false
+            };
         default:
-            return state;
+            return { ...state, isSigningInOrOut: false };
     }
 };
 

@@ -9,7 +9,6 @@ import StripeCheckoutButton from '../../components/stripe-button/stripe-button.c
 
 
 const CheckoutPage = ({ cartItems, total }) => {
-    window.scrollTo(0, 0);
     return (
         <div className="checkout-page">
             <div className="checkout-header">

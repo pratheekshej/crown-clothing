@@ -9,6 +9,10 @@ export const signingInOrOut = () => ({
     type: userActionTypes.SET_SIGNING_IN_OUT
 });
 
+export const signingInOrOutOff = () => ({
+    type: userActionTypes.SET_SIGNING_IN_OUT_OFF
+});
+
 export const googleSignInStart = () => ({
     type: userActionTypes.GOOGLE_SIGN_IN_START
 });
