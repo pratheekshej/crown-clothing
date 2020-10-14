@@ -13,11 +13,11 @@ import { selectCurrentUser, isSigningInOrOut } from './redux/user/user.selectors
 import CheckoutPage from './pages/checkout/checkout.component';
 import { FixedHeader } from './components/containers/header/fixed-header.styles';
 import { ScrollableSection } from './components/containers/body/scrollable-body.styles';
-import WidthSpinner from './components/width-spinner/width-spinner.component';
+import withSpinner from './components/with-spinner/with-spinner.component';
 // import { selectCollections } from './redux/shop/shop.selectors';
 
-const HomePageWithSpinner = WidthSpinner(HomePage);
-const SignInAndSignUpWithSpinner = WidthSpinner(SignInAndSignUp);
+const HomePageWithSpinner = withSpinner(HomePage);
+const SignInAndSignUpWithSpinner = withSpinner(SignInAndSignUp);
 
 const App = ({ checkUserSession, currentUser, signingInOrOut, ...otherProps }) => {
   useEffect(() => {

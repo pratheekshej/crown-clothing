@@ -1,7 +1,7 @@
 import React from 'react';
-import { SpinnerContainer, SpinnerOverlay } from "./width-spinner.styles";
+import { SpinnerContainer, SpinnerOverlay } from "./with-spinner.styles";
 
-const WidthSpinner = WrappedComponent => {
+const withSpinner = WrappedComponent => {
     const Spinner = ({ isLoading, ...otherProps }) => {
         window.scrollTo(0, 0);
         return isLoading ? (
@@ -15,4 +15,4 @@ const WidthSpinner = WrappedComponent => {
     return Spinner;
 };
 
-export default WidthSpinner;
+export default withSpinner;

@@ -30,7 +30,6 @@ const ShopPage = ({ fetchCollectionsBegin, match: { path } }) => {
             </Switch>
         </div>
     );
-
 }
 
 const mapDispatchToProps = dispatch => ({
